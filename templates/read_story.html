@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ story_name.replace('_', ' ').replace('.txt', '') }}</h1>
+    <pre style="white-space: pre-wrap; text-align: left; margin: 0 auto; max-width: 600px;">{{ content }}</pre>
+
+{% endblock %}

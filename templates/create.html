@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <a href="{{ url_for('export_pdf') }}" class="choice-btn">📕 Download Storybook</a>
+
+    <div class="container">
+        <h1>Create a Story Page</h1>
+        <form action="{{ url_for('create') }}" method="post" enctype="multipart/form-data" class="story-form">
+            <label for="title">Page Title (e.g., forest, bunny_path):</label><br>
+            <input type="text" name="title" required><br><br>
+
+            <label for="text">Story Text:</label><br>
+            <textarea name="text" rows="5" required></textarea><br><br>
+
+            <label for="choice1_text">Choice 1 Text:</label><br>
+            <input type="text" name="choice1_text" placeholder="e.g., Help the bunny"><br><br>
+            <label for="choice1_dest">Choice 1 Destination Page:</label><br>
+            <input type="text" name="choice1_dest" placeholder="e.g., carrot_cave"><br><br>
+
+            <label for="choice2_text">Choice 2 Text (optional):</label><br>
+            <input type="text" name="choice2_text"><br><br>
+            <label for="choice2_dest">Choice 2 Destination Page (optional):</label><br>
+            <input type="text" name="choice2_dest"><br><br>
+
+            <label for="image">Upload an Image (optional):</label><br>
+            <input type="file" name="image"><br><br>
+            
+            <label for="drawing_choice">Or use a saved drawing:</label><br>
+            <select name="drawing_choice">
+                <option value="">-- Select a drawing --</option>
+                {% for drawing in drawings %}
+                    <option value="{{ drawing }}">{{ drawing }}</option>
+                {% endfor %}
+            </select><br><br>
+            
+            <input type="submit" value="Create Page">
+        </form>
+    </div>
+    
+{% endblock %}

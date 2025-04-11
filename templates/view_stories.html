@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>📚 My Written Stories</h1>
+
+    {% if stories %}
+        <ul>
+        {% for story in stories %}
+            <li><a href="{{ url_for('read_story', story_name=story) }}">{{ story.replace('_', ' ').replace('.txt', '') }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No stories yet. Go write one!</p>
+    {% endif %}
+    
+{% endblock %}

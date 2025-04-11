@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>🎤 Record Narration for "{{ page_name }}"</h1>
+
+<button id="startBtn">🔴 Start Recording</button>
+<button id="stopBtn" disabled>⏹️ Stop</button>
+<button id="playBtn" disabled>▶️ Play</button>
+<button id="saveBtn" disabled>💾 Save</button>
+
+<p id="statusMsg"></p>
+
+<audio id="audioPlayback" controls style="margin-top: 20px;"></audio>
+
+<script>
+    let mediaRecorder;
+    let audioChunks = [];
+
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const playBtn = document.getElementById('playBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const audioPlayback = document.getElementById('audioPlayback');
+
+    startBtn.onclick = async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start();
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = e => {
+            audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            audioPlayback.src = URL.createObjectURL(audioBlob);
+            playBtn.disabled = false;
+            saveBtn.disabled = false;
+        };
+
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        document.getElementById('statusMsg').textContent = "🎙️ Recording...";
+    };
+
+    stopBtn.onclick = () => {
+        mediaRecorder.stop();
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+        document.getElementById('statusMsg').textContent = "✅ Recording stopped!";
+    };
+
+    saveBtn.onclick = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const formData = new FormData();
+        formData.append('audio', audioBlob);
+
+        fetch('{{ url_for("save_narration", page_name=page_name) }}', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('statusMsg').textContent = "✅ Narration saved!";
+        });
+    };
+</script>
+
+{% endblock %}

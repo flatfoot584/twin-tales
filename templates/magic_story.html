@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>🪄 Magic Story Generator</h1>
+
+{% if form %}
+<form method="POST">
+    <label>Your Name:</label><br>
+    <input type="text" name="name" value="{{ name or '' }}" required><br><br>
+
+    <label>Magical Object:</label><br>
+    <input type="text" name="object" value="{{ object or '' }}"><br><br>
+
+    <label>Magical Creature:</label><br>
+    <input type="text" name="creature" value="{{ creature or '' }}"><br><br>
+
+    <label>Magical Place:</label><br>
+    <input type="text" name="place" value="{{ place or '' }}"><br><br>
+
+    <label>Problem or Challenge:</label><br>
+    <input type="text" name="problem" value="{{ problem or '' }}"><br><br>
+
+    <input type="submit" value="Generate Story">
+    <button type="submit" name="surprise" value="1" class="choice-btn">🎲 Surprise Me!</button>
+</form>
+{% else %}
+    <div class="story-box">
+        <pre style="white-space: pre-wrap;">{{ story }}</pre>
+    </div>
+    <a href="{{ url_for('magic_story') }}" class="choice-btn">✨ Create Another!</a>
+    {% if pdf_filename %}
+        <br><br>
+        <a href="{{ url_for('static', filename='storybooks/' + pdf_filename) }}" class="choice-btn">📥 Download as PDF</a>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

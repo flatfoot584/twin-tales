@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🌟 Welcome to Twin Tales! 🌟</h1>
+
+<p style="font-size: 1.2em; margin-bottom: 30px;">
+    Explore magical stories, create your own adventures, draw your imagination, and save your tales forever!
+</p>
+
+<div class="nav-buttons">
+    <a href="{{ url_for('show_page', page='start') }}" class="nav-btn">📖 Start the Adventure</a>
+    <a href="{{ url_for('create') }}" class="nav-btn">➕ Create a Story Page</a>
+    <a href="{{ url_for('write_story') }}" class="nav-btn">📝 Write Your Own Story</a>
+    <a href="{{ url_for('draw') }}" class="nav-btn">🎨 Draw a Picture</a>
+    <a href="{{ url_for('view_written_stories') }}" class="nav-btn">📚 View My Stories</a>
+    <a href="{{ url_for('drawings') }}" class="nav-btn">🖼️ View My Drawings</a>
+    <a href="{{ url_for('export_pdf') }}" class="nav-btn">📕 Export Full Storybook</a>
+    <a href="{{ url_for('magic_story') }}" class="nav-btn">🎲 Magic Story Generator</a>
+    <a href="{{ url_for('add_character') }}" class="nav-btn">📸 Add a Character</a>
+</div>
+{% endblock %}

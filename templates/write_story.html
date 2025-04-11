@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>📝 Write Your Own Story</h1>
+    <form action="{{ url_for('write_story') }}" method="POST">
+        <label for="title">Story Title:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label for="body">Your Story:</label><br>
+        <textarea name="body" rows="10" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Save Story">
+    </form>
+
+    {% if message %}
+        <p style="color: green;">{{ message }}</p>
+    {% endif %}
+{% endblock %}

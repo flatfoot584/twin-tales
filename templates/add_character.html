@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>📸 Add a Character</h1>
+
+<form action="{{ url_for('add_character') }}" method="post" enctype="multipart/form-data">
+
+    <label for="name">Character Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="page">Story Page to Appear On (e.g., forest, home):</label><br>
+    <input type="text" name="page" required><br><br>
+
+    <!-- 🔄 INSERT THIS BLOCK HERE — replacing the old photo input -->
+    <label for="photo">Take a Character Photo:</label><br>
+
+    <!-- Hidden file input -->
+    <input type="file" id="photo" name="photo" accept="image/*" capture="environment" required style="display: none;">
+
+    <!-- Camera Button -->
+    <button type="button" onclick="document.getElementById('photo').click();" class="camera-btn">
+        📸 Take a Character Photo
+    </button><br><br>
+
+    <!-- Image Preview -->
+    <img id="photoPreview" style="display: none; max-width: 250px; border-radius: 15px; border: 2px solid #ff69b4;" />
+    <!-- 🔼 End of camera + preview block -->
+
+    <br>
+    <input type="submit" value="Add Character">
+
+</form>
+
+<!-- Preview Script (add below the form) -->
+<script>
+    const fileInput = document.getElementById('photo');
+    const previewImg = document.getElementById('photoPreview');
+
+    fileInput.onchange = () => {
+        const file = fileInput.files[0];
+        if (file) {
+            previewImg.src = URL.createObjectURL(file);
+            previewImg.style.display = "block";
+        }
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>🎨 Draw a Picture</h1>
+    <canvas id="drawingCanvas" width="400" height="400" style="border:2px solid #ff69b4; background: white;"></canvas><br><br>
+    
+    <button onclick="clearCanvas()">🧼 Clear</button>
+    <button onclick="saveDrawing()">💾 Save</button>
+    
+    <p id="statusMessage" style="color: green;"></p>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        canvas.addEventListener('mousedown', () => drawing = true);
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mousemove', draw);
+
+        function draw(e) {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            ctx.fillStyle = "#ff69b4";
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveDrawing() {
+            const imageData = canvas.toDataURL("image/png");
+            fetch("/save_drawing", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "drawing=" + encodeURIComponent(imageData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("statusMessage").textContent = "✅ Drawing saved as " + data.filename;
+            });
+        }
+    </script>
+    
+{% endblock %}

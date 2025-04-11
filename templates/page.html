@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🌟 Welcome to Twin Tales! 🌟</h1>
+
+<h2>Twin Tales - Story</h2>
+<a href="{{ url_for('export_pdf') }}" class="choice-btn">📕 Download Storybook</a>
+<a href="{{ url_for('add_character') }}" class="choice-btn">📸 Add a Character to This Page</a>
+
+
+<div class="container">
+    {% if image %}
+        <img src="{{ url_for('static', filename='images/' + image) }}" alt="Story Scene" class="story-image">
+    {% endif %}
+
+    {% if character %}
+    <div class="character-box">
+        <p><strong>{{ character.name }}</strong> appears on this page!</p>
+        <img src="{{ url_for('static', filename='characters/' + character.photo) }}" alt="{{ character.name }}" class="character-photo">
+    </div>
+    {% endif %}
+
+    <!-- 🎤 Narration playback (if it exists) -->
+    {% set audio_filename = page + '.wav' %}
+    {% if audio_filename in audio_files %}
+        <div style="margin: 20px 0;">
+            <p><strong>🎧 Listen to your narration:</strong></p>
+            <audio controls>
+                <source src="{{ url_for('static', filename='audio/' + audio_filename) }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    {% endif %}
+
+    <!-- 🎙️ Record narration button -->
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('record_narration', page_name=page) }}" class="choice-btn">🎤 Record Your Narration</a>
+    </div>
+
+    <div class="story-box">
+        <p class="story-text">{{ text }}</p>
+
+        {% if choices %}
+            <div class="choices">
+                {% for label, next_page in choices.items() %}
+                <a href="{{ url_for('show_page', page=next_page) }}" class="choice-btn">
+                    {{ label }}
+                    {% if next_page + '.wav' in audio_files %} 
+                    <span class="mic-icon" title="Narration Available">🎙️</span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <p><strong>The End!</strong></p>
+            <a href="{{ url_for('home') }}" class="start-over">Start Over</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

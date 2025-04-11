@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>🎨 My Drawings</h1>
+
+    {% if drawings %}
+        <div class="gallery-grid">
+            {% for drawing in drawings %}
+                <div class="drawing-card">
+                    <img src="{{ url_for('static', filename='images/' + drawing) }}" alt="Drawing" class="drawing-thumb">
+                    <p>{{ drawing }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No drawings yet — go make some art!</p>
+    {% endif %}
+    
+{% endblock %}

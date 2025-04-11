@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    {% if show_nav is not defined or show_nav %}
+    <!-- 🔗 Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}">🏠 Home</a>
+        <a href="{{ url_for('show_page', page='start') }}">📖 Story</a>
+        <a href="{{ url_for('create') }}">➕ New Page</a>
+        <a href="{{ url_for('write_story') }}">📝 Write</a>
+        <a href="{{ url_for('add_character') }}">📸 Character</a>
+        <a href="{{ url_for('draw') }}">🎨 Draw</a>
+        <a href="{{ url_for('view_written_stories') }}">📚 My Stories</a>
+        <a href="{{ url_for('drawings') }}">🖼️ My Drawings</a>
+        <a href="{{ url_for('export_pdf') }}">📕 Export</a>
+    </nav>
+    {% endif %}
+
+    <div class="page-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>
