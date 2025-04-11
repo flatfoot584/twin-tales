@@ -1,0 +1,46 @@
+{
+    "start": {
+        "text": "Once upon a time, Harper and Emerie found a magical door in the backyard. Do they open it?",
+        "image": "bunnies-in-bed.jpg",
+        "choices": {
+            "Yes": "forest",
+            "No": "home"
+        }
+    },
+    "forest": {
+        "text": "They step into a glowing forest! A talking bunny asks for help finding its carrot. Do they help?",
+        "image": "bunny-1.jpg",
+        "choices": {
+            "Yes": "carrot",
+            "No": "glow_mushroom"
+        }
+    },
+    "home": {
+        "text": "They stay home and bake cookies. Yum! The End.",
+        "image": "bunny-2.jpg",
+        "choices": {}
+    },
+    "carrot": {
+        "text": "They find the carrot floating in a bubble. The bunny gives them a shiny gem!",
+        "image": "bunny-in-field.jpg",
+        "choices": {
+            "Go to Dream Realm": "dream_realm",
+            "Keep exploring": "butterfly_field"
+        }
+    },
+    "glow_mushroom": {
+        "text": "They follow a glowing mushroom into the candy woods!",
+        "image": "kitty-paws.jpg",
+        "choices": {
+            "Hop on a candy vine": "candy_mountains",
+            "Take the rainbow slide": "cloud_slide"
+        }
+    },
+    "Bunny-hunny": {
+        "text": "This is a great story!",
+        "choices": {
+            "Help with the bunnies?": "bunnies"
+        },
+        "image": "bunnies-in-bed.jpg"
+    }
+}
